@@ -67,6 +67,9 @@ ln -sf /var/lib/samba/private/smbusers /etc/samba/smbusers
 # Mark samba as setup
 touch "${SETUP_LOCK_FILE}"
 
+# Setup only?
+[ -n "$SAMBA_SETUP_ONLY" ] && exit 127 || :
+
 }
 
 appStart () {
