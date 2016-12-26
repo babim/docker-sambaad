@@ -35,12 +35,15 @@ Environment variables are controlling the way how this image behaves therefore p
 * SAMBA_DNS_FORWARDER (optional) You can supply the dns-forwarder Samba will use to answer non-local DNS-requests clients submit.
 * KERBEROS_PASSWORD (optional) The kerberos password  if not set will set to `$(pwgen -cny 10 1)`
 
-
 ### Use existing data
+
+The first time you start the container, a setup-script will run and provision the domain controller using the supplied environment variables. After the setup has finished successfully, the container will continue starting (unless SAMBA_SETUP_ONLY is set) and start the domain controller.
+
+The container saves all necessary files within /var/lib/samba. See the following examples on how to start/setup the domain controller and how to persist this volume.
 
 Using (or reusing data) is done by providing
 * `/var/lib/samba/private/smb.conf`
-* `/etc/krb5.conf`
+* `/etc/krb5.conf > link to /var/lib/samba/private/krb5.conf`
 * `/usr/lib/samba/`
 * `/var/lib/krb5kdc/`
 
