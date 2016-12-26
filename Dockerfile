@@ -26,6 +26,7 @@ RUN apk add --no-cache \
     tdb \
     tdb-dev \
     py-tdb \
+    attr \
     bash nano
 
 RUN pip install dnspython
