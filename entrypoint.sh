@@ -72,9 +72,13 @@ touch "${SETUP_LOCK_FILE}"
 }
 
 appStart () {
+    # ssh
+    if [ -f "/runssh.sh" ]; then /runssh.sh; fi
+    # setup
     if [ ! -f "${SETUP_LOCK_FILE}" ]; then
       appSetup
     fi
+    # run
     /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
 }
 
