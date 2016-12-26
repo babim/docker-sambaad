@@ -2,7 +2,6 @@
 set -e
 
 LDAP_ALLOW_INSECURE=${LDAP_ALLOW_INSECURE:-false}
-SAMBA_DOMAIN=${SAMBA_DOMAIN:-SAMBA}
 SAMBA_REALM=${SAMBA_REALM:-SAMBA.LAN}
 SETUP_LOCK_FILE="/var/lib/samba/private/.setup.lock.do.not.remove"
 
@@ -37,7 +36,6 @@ mkdir -p /var/lib/samba/private
 samba-tool domain provision \
     --use-rfc2307 \
     --realm=${SAMBA_REALM} \
-    --domain=${SAMBA_DOMAIN} \
     --adminpass=${SAMBA_PASSWORD} \
     --server-role=dc \
     --dns-backend=BIND9_DLZ \
