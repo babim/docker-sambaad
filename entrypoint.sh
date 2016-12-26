@@ -42,7 +42,7 @@ samba-tool domain provision \
     $SAMBA_OPTIONS \
     --option="bind interfaces only"=yes
 
- cp /var/lib/samba/private/krb5.conf /etc/krb5.conf
+ ln -sf /var/lib/samba/private/krb5.conf /etc/krb5.conf
     if [ "${LDAP_ALLOW_INSECURE,,}" == "true" ]; then
 	     sed -i "/\[global\]/a \\\t\# enable unencrypted passwords\nldap server require strong auth = no" /etc/samba/smb.conf
 	  fi
