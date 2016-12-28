@@ -75,6 +75,13 @@ touch "${SETUP_LOCK_FILE}"
 appStart () {
     # ssh
     if [ -f "/runssh.sh" ]; then /runssh.sh; fi
+    # Move smb.conf
+    if [ -f "/etc/samba/smb.conf" ]; then
+	mv /etc/samba/smb.conf /var/lib/samba/private/smb.conf
+	ln -sf /var/lib/samba/private/smb.conf /etc/samba/smb.conf
+	mv /etc/samba/smbusers /var/lib/samba/private/smbusers
+	ln -sf /var/lib/samba/private/smbusers /etc/samba/smbusers
+    fi
     # setup
     if [ ! -f "${SETUP_LOCK_FILE}" ]; then
       appSetup
