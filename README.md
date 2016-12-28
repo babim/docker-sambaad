@@ -1,5 +1,8 @@
 ## Samba 4 AD container based on Alpine Linux
 
+[![](https://images.microbadger.com/badges/image/babim/samba.svg)](https://microbadger.com/images/babim/samba "Get your own image badge on microbadger.com") [![](https://images.microbadger.com/badges/version/babim/samba.svg)](https://microbadger.com/images/babim/samba "Get your own version badge on microbadger.com")
+[![](https://images.microbadger.com/badges/image/babim/samba:ssh.svg)](https://microbadger.com/images/babim/samba:ssh "Get your own image badge on microbadger.com") [![](https://images.microbadger.com/badges/version/babim/samba:ssh.svg)](https://microbadger.com/images/babim/samba:ssh "Get your own version badge on microbadger.com")
+
 ### Credits
 Some parts are collected from:
 * https://github.com/pitkley/dockerfiles/tree/master/samba-ad-dc
@@ -16,10 +19,12 @@ docker run -it --rm babim/sambaad
 ```
 docker run --rm -i -t \
     -e SAMBA_REALM="samba.dom" \
+    -e SAMBA_DOMAIN="samba" \
     -e SAMBA_PASSWORD="Password1!" \
     -e SAMBA_HOST_IP="192.168.1.10" \
     -e SAMBA_DNS_FORWARDER="192.168.1.1" \
     -v ${PWD}/samba:/var/lib/samba \
+    -h addomain \
     babim/sambaad
 ```
 
