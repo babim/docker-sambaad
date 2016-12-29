@@ -1,7 +1,7 @@
 ## Samba 4 AD container based on Alpine Linux
 
-[![](https://images.microbadger.com/badges/image/babim/samba.svg)](https://microbadger.com/images/babim/samba "Get your own image badge on microbadger.com") [![](https://images.microbadger.com/badges/version/babim/samba.svg)](https://microbadger.com/images/babim/samba "Get your own version badge on microbadger.com")
-[![](https://images.microbadger.com/badges/image/babim/samba:ssh.svg)](https://microbadger.com/images/babim/samba:ssh "Get your own image badge on microbadger.com") [![](https://images.microbadger.com/badges/version/babim/samba:ssh.svg)](https://microbadger.com/images/babim/samba:ssh "Get your own version badge on microbadger.com")
+[![](https://images.microbadger.com/badges/image/babim/sambaad.svg)](https://microbadger.com/images/babim/sambaad "Get your own image badge on microbadger.com") [![](https://images.microbadger.com/badges/version/babim/sambaad.svg)](https://microbadger.com/images/babim/sambaad "Get your own version badge on microbadger.com")
+[![](https://images.microbadger.com/badges/image/babim/sambaad:ssh.svg)](https://microbadger.com/images/babim/sambaad:ssh "Get your own image badge on microbadger.com") [![](https://images.microbadger.com/badges/version/babim/sambaad:ssh.svg)](https://microbadger.com/images/babim/sambaad:ssh "Get your own version badge on microbadger.com")
 
 ### Credits
 Some parts are collected from:
@@ -51,5 +51,6 @@ Using (or reusing data) is done by providing
 * `/etc/krb5.conf > link to /var/lib/samba/private/krb5.conf`
 * `/usr/lib/samba/`
 * `/var/lib/krb5kdc/`
+* `/etc/samba/`
 
 as volumes to the docker container.
