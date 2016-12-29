@@ -51,13 +51,13 @@ samba-tool domain provision \
         samba-tool domain exportkeytab /etc/krb5.keytab --principal ${HOSTNAME}\$
     fi
 
-# Update dns-forwarder if required
-[ -n "$SAMBA_DNS_FORWARDER" ] \
-    && sed -i "s/dns forwarder = .*/dns forwarder = $SAMBA_DNS_FORWARDER/" /var/lib/samba/private/smb.conf
-
 # Move smb.conf
 mv /etc/samba/smb.conf /var/lib/samba/private/smb.conf
 ln -sf /var/lib/samba/private/smb.conf /etc/samba/smb.conf
+
+# Update dns-forwarder if required
+[ -n "$SAMBA_DNS_FORWARDER" ] \
+    && sed -i "s/dns forwarder = .*/dns forwarder = $SAMBA_DNS_FORWARDER/" /var/lib/samba/private/smb.conf
 
 # Mark samba as setup
 touch "${SETUP_LOCK_FILE}"
