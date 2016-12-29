@@ -54,7 +54,12 @@ samba-tool domain provision \
         samba-tool domain exportkeytab /etc/krb5.keytab --principal ${HOSTNAME}\$
 fi
 
-# Move smb.conf
+# move kerberos config
+mv /etc/krb5.keytab /var/lib/samba/private/krb5.keytab
+ln-sf /var/lib/samba/private/krb5.keytab /etc/krb5.keytab
+mv /var/lib/krb5kdc /var/lib/samba/private/krb5kdc
+ln -sf /var/lib/samba/private/krb5kdc /var/lib/krb5kdc
+# Move samba config
 mv /etc/samba/smb.conf /var/lib/samba/private/smb.conf
 ln -sf /var/lib/samba/private/smb.conf /etc/samba/smb.conf
 mv /etc/samba/smbusers /var/lib/samba/private/smbusers
