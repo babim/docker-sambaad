@@ -31,7 +31,6 @@ RUN apk add --no-cache \
 RUN pip install dnspython
 RUN pip install
 
-ADD kdb5_util_create.expect kdb5_util_create.expect
 ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 COPY entrypoint.sh /entrypoint.sh
