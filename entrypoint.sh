@@ -3,6 +3,15 @@ set -e
 
 LDAP_ALLOW_INSECURE=${LDAP_ALLOW_INSECURE:-false}
 SAMBA_REALM=${SAMBA_REALM:-SAMBA.LAN}
+# Populate $SAMBA_OPTIONS
+SAMBA_OPTIONS=${SAMBA_OPTIONS:-}
+
+[ -n "$SAMBA_DOMAIN" ] \
+    && SAMBA_OPTIONS="$SAMBA_OPTIONS --domain=$SAMBA_DOMAIN" \
+    || SAMBA_OPTIONS="$SAMBA_OPTIONS --domain=${SAMBA_REALM%%.*}"
+
+[ -n "$SAMBA_HOST_IP" ] && SAMBA_OPTIONS="$SAMBA_OPTIONS --host-ip=$SAMBA_HOST_IP"
+
 SETUP_LOCK_FILE="/var/lib/samba/private/.setup.lock.do.not.remove"
 
 appSetup () {
@@ -16,15 +25,6 @@ SAMBA_PASSWORD=${SAMBA_PASSWORD:-`(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c2
 KERBEROS_PASSWORD=${KERBEROS_PASSWORD:-`(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c20; echo) 2>/dev/null`}
 info "Samba password set to: $SAMBA_PASSWORD"
 info "Kerberos password set to: $KERBEROS_PASSWORD"
-
-# Populate $SAMBA_OPTIONS
-SAMBA_OPTIONS=${SAMBA_OPTIONS:-}
-
-[ -n "$SAMBA_DOMAIN" ] \
-    && SAMBA_OPTIONS="$SAMBA_OPTIONS --domain=$SAMBA_DOMAIN" \
-    || SAMBA_OPTIONS="$SAMBA_OPTIONS --domain=${SAMBA_REALM%%.*}"
-
-[ -n "$SAMBA_HOST_IP" ] && SAMBA_OPTIONS="$SAMBA_OPTIONS --host-ip=$SAMBA_HOST_IP"
 
 # Fix nameserver
 echo -e "search ${SAMBA_REALM}\nnameserver 127.0.0.1" > /etc/resolv.conf
@@ -54,17 +54,6 @@ samba-tool domain provision \
         samba-tool domain exportkeytab /etc/krb5.keytab --principal ${HOSTNAME}\$
 fi
 
-# move kerberos config
-mv /etc/krb5.keytab /var/lib/samba/private/krb5.keytab
-ln -sf /var/lib/samba/private/krb5.keytab /etc/krb5.keytab
-mv /var/lib/krb5kdc /var/lib/samba/private/krb5kdc
-ln -sf /var/lib/samba/private/krb5kdc /var/lib/krb5kdc
-# Move samba config
-mv /etc/samba/smb.conf /var/lib/samba/private/smb.conf
-ln -sf /var/lib/samba/private/smb.conf /etc/samba/smb.conf
-mv /etc/samba/smbusers /var/lib/samba/private/smbusers
-ln -sf /var/lib/samba/private/smbusers /etc/samba/smbusers
-
 # Update dns-forwarder if required
 [ -n "$SAMBA_DNS_FORWARDER" ] \
     && sed -i "s/dns forwarder = .*/dns forwarder = $SAMBA_DNS_FORWARDER/" /var/lib/samba/private/smb.conf
@@ -84,13 +73,7 @@ appStart () {
     fi
     # ssh
     if [ -f "/runssh.sh" ]; then /runssh.sh; fi
-    # Move smb.conf
-    if [ -f "/etc/samba/smb.conf" ]; then
-	mv /etc/samba/smb.conf /var/lib/samba/private/smb.conf
-	ln -sf /var/lib/samba/private/smb.conf /etc/samba/smb.conf
-	mv /etc/samba/smbusers /var/lib/samba/private/smbusers
-	ln -sf /var/lib/samba/private/smbusers /etc/samba/smbusers
-    fi
+
     # run
     /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
 }
