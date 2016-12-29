@@ -43,6 +43,7 @@ samba-tool domain provision \
 	     sed -i "/\[global\]/a \\\t\# enable unencrypted passwords\nldap server require strong auth = no" /etc/samba/smb.conf
 	  fi
     # Create Kerberos database
+    haveged -w 1024
     /usr/sbin/kdb5_util -P $KERBEROS_PASSWORD -r $SAMBA_REALM create -s
 
     # Export kerberos keytab for use with sssd
