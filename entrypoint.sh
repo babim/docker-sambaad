@@ -38,7 +38,7 @@ samba-tool domain provision \
     --realm=${SAMBA_REALM} \
     --adminpass=${SAMBA_PASSWORD} \
     --server-role=dc \
-    --dns-backend=SAMBA_INTERNAL \
+    --dns-backend=BIND9_DLZ \
     $SAMBA_OPTIONS \
     --option="bind interfaces only"=yes
 
