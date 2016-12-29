@@ -16,15 +16,11 @@ SETUP_LOCK_FILE="/var/lib/samba/private/.setup.lock.do.not.remove"
 
 appSetup () {
 
-info () {
-    echo "[INFO] $@"
-}
-
 # If $SAMBA_PASSWORD is not set, generate a password
 SAMBA_PASSWORD=${SAMBA_PASSWORD:-`(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c20; echo) 2>/dev/null`}
 KERBEROS_PASSWORD=${KERBEROS_PASSWORD:-`(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c20; echo) 2>/dev/null`}
-info "Samba password set to: $SAMBA_PASSWORD"
-info "Kerberos password set to: $KERBEROS_PASSWORD"
+echo "Samba password set to: $SAMBA_PASSWORD"
+echo "Kerberos password set to: $KERBEROS_PASSWORD"
 
 # Fix nameserver
 echo -e "search ${SAMBA_REALM}\nnameserver 127.0.0.1" > /etc/resolv.conf
@@ -53,9 +49,6 @@ samba-tool domain provision \
     if [ "${OMIT_EXPORT_KEY_TAB}" != "true" ]; then
         samba-tool domain exportkeytab /etc/krb5.keytab --principal ${HOSTNAME}\$
     fi
-
-# Move smb.conf
-mv /etc/samba/smb.conf /var/lib/samba/private/smb.conf
 
 # Update dns-forwarder if required
 [ -n "$SAMBA_DNS_FORWARDER" ] \
