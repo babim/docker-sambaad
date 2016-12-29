@@ -27,6 +27,19 @@ docker run --rm -i -t \
     -h addomain \
     babim/sambaad
 ```
+Production
+```
+docker run -d \
+    -e SAMBA_REALM="samba.dom" \
+    -e SAMBA_DOMAIN="samba" \
+    -e SAMBA_PASSWORD="Password1!" \
+    -e SAMBA_HOST_IP="192.168.1.10" \
+    -e SAMBA_DNS_FORWARDER="192.168.1.1" \
+    -v ${PWD}/samba:/var/lib/samba \
+    -V ${PWD}/krb5kdc:/var/lib/krb5kdc \
+    --name addomain -h addomain \
+    --privileged --network=host \
+    babim/sambaad
 
 ### Environment variables
 
