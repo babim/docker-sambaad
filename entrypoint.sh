@@ -56,7 +56,7 @@ fi
 
 # move kerberos config
 mv /etc/krb5.keytab /var/lib/samba/private/krb5.keytab
-ln-sf /var/lib/samba/private/krb5.keytab /etc/krb5.keytab
+ln -sf /var/lib/samba/private/krb5.keytab /etc/krb5.keytab
 mv /var/lib/krb5kdc /var/lib/samba/private/krb5kdc
 ln -sf /var/lib/samba/private/krb5kdc /var/lib/krb5kdc
 # Move samba config
