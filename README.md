@@ -35,7 +35,7 @@ docker run -h addomain -d \
     -e SAMBA_PASSWORD="Password1!" \
     -e SAMBA_HOST_IP="192.168.1.10" \
     -e SAMBA_DNS_FORWARDER="192.168.1.1" \
-    -v ${PWD}/samba:/var/lib/samba \
+    -v ${PWD}/libsamba:/var/lib/samba \
     -v ${PWD}/krb5kdc:/var/lib/krb5kdc \
     -v ${PWD}/etcsamba:/etc/samba \
     --name addomain --privileged --network=host \
