@@ -13,7 +13,7 @@ info () {
 
 # If $SAMBA_PASSWORD is not set, generate a password
 SAMBA_PASSWORD=${SAMBA_PASSWORD:-`(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c20; echo) 2>/dev/null`}
-export KERBEROS_PASSWORD=${KERBEROS_PASSWORD:-`(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c20; echo) 2>/dev/null`}
+KERBEROS_PASSWORD=${KERBEROS_PASSWORD:-`(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c20; echo) 2>/dev/null`}
 info "Samba password set to: $SAMBA_PASSWORD"
 info "Kerberos password set to: $KERBEROS_PASSWORD"
 
@@ -47,7 +47,7 @@ samba-tool domain provision \
 	     sed -i "/\[global\]/a \\\t\# enable unencrypted passwords\nldap server require strong auth = no" /etc/samba/smb.conf
 	  fi
     # Create Kerberos database
-    expect kdb5_util_create.expect
+    /usr/sbin/kdb5_util -P $KERBEROS_PASSWORD -r $SAMBA_REALM create -s
 
     # Export kerberos keytab for use with sssd
     if [ "${OMIT_EXPORT_KEY_TAB}" != "true" ]; then
@@ -78,6 +78,10 @@ touch "${SETUP_LOCK_FILE}"
 }
 
 appStart () {
+    # setup
+    if [ ! -f "${SETUP_LOCK_FILE}" ]; then
+      appSetup
+    fi
     # ssh
     if [ -f "/runssh.sh" ]; then /runssh.sh; fi
     # Move smb.conf
@@ -86,10 +90,6 @@ appStart () {
 	ln -sf /var/lib/samba/private/smb.conf /etc/samba/smb.conf
 	mv /etc/samba/smbusers /var/lib/samba/private/smbusers
 	ln -sf /var/lib/samba/private/smbusers /etc/samba/smbusers
-    fi
-    # setup
-    if [ ! -f "${SETUP_LOCK_FILE}" ]; then
-      appSetup
     fi
     # run
     /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
