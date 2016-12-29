@@ -18,7 +18,7 @@ docker run -it --rm babim/sambaad
 ```
 ```
 docker run --rm -i -t \
-    -e SAMBA_REALM="samba.dom" \
+    -e SAMBA_REALM="samba.lan" \
     -e SAMBA_DOMAIN="samba" \
     -e SAMBA_PASSWORD="Password1!" \
     -e SAMBA_HOST_IP="192.168.1.10" \
@@ -29,8 +29,8 @@ docker run --rm -i -t \
 ```
 Production deploy
 ```
-docker run -d \
-    -e SAMBA_REALM="samba.dom" \
+docker run -h addomain -d \
+    -e SAMBA_REALM="samba.lan" \
     -e SAMBA_DOMAIN="samba" \
     -e SAMBA_PASSWORD="Password1!" \
     -e SAMBA_HOST_IP="192.168.1.10" \
@@ -38,10 +38,9 @@ docker run -d \
     -v ${PWD}/samba:/var/lib/samba \
     -v ${PWD}/krb5kdc:/var/lib/krb5kdc \
     -v ${PWD}/etcsamba:/etc/samba \
-    --name addomain -h addomain \
-    --privileged --network=host \
+    --name addomain --privileged --network=host \
     babim/sambaad
-
+```
 ### Environment variables
 
 Environment variables are controlling the way how this image behaves therefore please check this list an explanation:
