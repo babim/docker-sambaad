@@ -27,7 +27,7 @@ docker run --rm -i -t \
     -h addomain \
     babim/sambaad
 ```
-Production
+Production deploy
 ```
 docker run -d \
     -e SAMBA_REALM="samba.dom" \
@@ -36,7 +36,8 @@ docker run -d \
     -e SAMBA_HOST_IP="192.168.1.10" \
     -e SAMBA_DNS_FORWARDER="192.168.1.1" \
     -v ${PWD}/samba:/var/lib/samba \
-    -V ${PWD}/krb5kdc:/var/lib/krb5kdc \
+    -v ${PWD}/krb5kdc:/var/lib/krb5kdc \
+    -v ${PWD}/etcsamba:/etc/samba \
     --name addomain -h addomain \
     --privileged --network=host \
     babim/sambaad
