@@ -52,7 +52,10 @@ samba-tool domain provision \
     # Export kerberos keytab for use with sssd
     if [ "${OMIT_EXPORT_KEY_TAB}" != "true" ]; then
         samba-tool domain exportkeytab /etc/krb5.keytab --principal ${HOSTNAME}\$
-fi
+    fi
+
+# Move smb.conf
+mv /etc/samba/smb.conf /var/lib/samba/private/smb.conf
 
 # Update dns-forwarder if required
 [ -n "$SAMBA_DNS_FORWARDER" ] \
