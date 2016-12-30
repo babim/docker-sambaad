@@ -75,9 +75,18 @@ appStart () {
     fi
     # ssh
     if [ -f "/runssh.sh" ]; then /runssh.sh; fi
-
+    
     # run
     /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
+    
+    # Recreate Kerberos database
+    if [ ! -f "/var/lib/krb5kdc" ]; then
+	rm -f /etc/krb5.conf
+	ln -sf /var/lib/samba/private/krb5.conf /etc/krb5.conf
+	haveged -w 1024
+        /usr/sbin/kdb5_util -P $KERBEROS_PASSWORD -r $SAMBA_REALM create -s
+        samba-tool domain exportkeytab /etc/krb5.keytab --principal ${HOSTNAME}\$
+    fi
 }
 
 appHelp () {
