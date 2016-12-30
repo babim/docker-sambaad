@@ -34,7 +34,7 @@ ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod 755 /entrypoint.sh
-VOLUME ["/var/lib/samba", "/etc/samba", "/var/lib/krb5kdc"]
+VOLUME ["/var/lib/samba", "/etc/samba"]
 EXPOSE 53 53/udp 389 88 135 139 138 445 464 3268 3269
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["app:start"]
