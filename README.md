@@ -20,7 +20,7 @@ docker run -it --rm babim/sambaad
 ```
 ```
 docker run --rm -i -t \
-    -e SAMBA_REALM="samba.lan" \
+    -e SAMBA_REALM="SAMBA.LAN" \
     -e SAMBA_DOMAIN="samba" \
     -e SAMBA_PASSWORD="Password1!" \
     -e SAMBA_HOST_IP="192.168.1.10" \
@@ -32,7 +32,7 @@ docker run --rm -i -t \
 Production deploy
 ```
 docker run -h addomain -d \
-    -e SAMBA_REALM="samba.lan" \
+    -e SAMBA_REALM="SAMBA.LAN" \
     -e SAMBA_DOMAIN="samba" \
     -e SAMBA_PASSWORD="Password1!" \
     -e SAMBA_HOST_IP="192.168.1.10" \
@@ -43,6 +43,10 @@ docker run -h addomain -d \
     --name addomain --privileged --network=host \
     babim/sambaad
 ```
+note:
+* REALM always need UPPERLETTER
+* DOMAIN need lowerletter
+
 ### Environment variables
 
 Environment variables are controlling the way how this image behaves therefore please check this list an explanation:
