@@ -37,7 +37,7 @@ samba-tool domain provision \
     --option="bind interfaces only"=yes
 
     if [ "${LDAP_ALLOW_INSECURE,,}" == "true" ]; then
-	     sed -i "/\[global\]/a \\\t\# enable unencrypted passwords\nldap server require strong auth = no" /etc/samba/smb.conf
+	     sed -i "/\[global\]/a \\\ldap server require strong auth = no" /etc/samba/smb.conf
 	  fi
 
 # Move smb.conf
