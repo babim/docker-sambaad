@@ -41,7 +41,7 @@ samba-tool domain provision \
 rm -f /etc/krb5.conf
  ln -sf /var/lib/samba/private/krb5.conf /etc/krb5.conf
     if [ "${LDAP_ALLOW_INSECURE,,}" == "true" ]; then
-	     sed -i "/\[global\]/a \\\t\# enable unencrypted passwords\nldap server require strong auth = no" /etc/samba/smb.conf
+	     sed -i "/\[global\]/a \\\ldap server require strong auth = no" /etc/samba/smb.conf
 	  fi
     # Create Kerberos database
     haveged -w 1024
