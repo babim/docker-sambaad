@@ -18,9 +18,7 @@ appSetup () {
 
 # If $SAMBA_PASSWORD is not set, generate a password
 SAMBA_PASSWORD=${SAMBA_PASSWORD:-`(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c20; echo) 2>/dev/null`}
-KERBEROS_PASSWORD=${KERBEROS_PASSWORD:-`(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c20; echo) 2>/dev/null`}
 echo "Samba password set to: $SAMBA_PASSWORD"
-echo "Kerberos password set to: $KERBEROS_PASSWORD"
 
 # Fix nameserver
 echo -e "search ${SAMBA_REALM}\nnameserver 127.0.0.1" > /etc/resolv.conf
@@ -38,19 +36,9 @@ samba-tool domain provision \
     $SAMBA_OPTIONS \
     --option="bind interfaces only"=yes
 
-rm -f /etc/krb5.conf
- ln -sf /var/lib/samba/private/krb5.conf /etc/krb5.conf
     if [ "${LDAP_ALLOW_INSECURE,,}" == "true" ]; then
 	     sed -i "/\[global\]/a \\\t\# enable unencrypted passwords\nldap server require strong auth = no" /etc/samba/smb.conf
 	  fi
-    # Create Kerberos database
-    haveged -w 1024
-    /usr/sbin/kdb5_util -P $KERBEROS_PASSWORD -r $SAMBA_REALM create -s
-
-    # Export kerberos keytab for use with sssd
-    if [ "${OMIT_EXPORT_KEY_TAB}" != "true" ]; then
-        samba-tool domain exportkeytab /etc/krb5.keytab --principal ${HOSTNAME}\$
-    fi
 
 # Move smb.conf
 mv /etc/samba/smb.conf /var/lib/samba/private/smb.conf
