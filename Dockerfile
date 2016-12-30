@@ -3,7 +3,6 @@ FROM babim/alpinebase
 ENV TERM=xterm-color
 RUN apk add --no-cache \
     samba-dc \
-    krb5-server \
     supervisor \
     bind \
     bind-tools \
@@ -26,7 +25,7 @@ RUN apk add --no-cache \
     tdb \
     tdb-dev \
     py-tdb \
-    bash nano haveged
+    bash
 
 RUN pip install dnspython
 RUN pip install
