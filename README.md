@@ -1,10 +1,5 @@
 ## Samba 4 AD container based on Alpine Linux
 
-[![](https://images.microbadger.com/badges/image/babim/sambaad.svg)](https://microbadger.com/images/babim/sambaad "Get your own image badge on microbadger.com") [![](https://images.microbadger.com/badges/version/babim/sambaad.svg)](https://microbadger.com/images/babim/sambaad "Get your own version badge on microbadger.com") [![](https://images.microbadger.com/badges/image/babim/sambaad:ssh.svg)](https://microbadger.com/images/babim/sambaad:ssh "Get your own image badge on microbadger.com") [![](https://images.microbadger.com/badges/version/babim/sambaad:ssh.svg)](https://microbadger.com/images/babim/sambaad:ssh "Get your own version badge on microbadger.com")
-
-[![](https://images.microbadger.com/badges/image/babim/sambaad:nokrb.svg)](https://microbadger.com/images/babim/sambaad:nokrb "Get your own image badge on microbadger.com") [![](https://images.microbadger.com/badges/version/babim/sambaad:nokrb.svg)](https://microbadger.com/images/babim/sambaad:nokrb "Get your own version badge on microbadger.com")
-[![](https://images.microbadger.com/badges/image/babim/sambaad:nokrb.ssh.svg)](https://microbadger.com/images/babim/sambaad:nokrb.ssh "Get your own image badge on microbadger.com") [![](https://images.microbadger.com/badges/version/babim/sambaad:nokrb.ssh.svg)](https://microbadger.com/images/babim/sambaad:nokrb.ssh "Get your own version badge on microbadger.com")
-
 ### Credits
 Some parts are collected from:
 * https://github.com/pitkley/dockerfiles/tree/master/samba-ad-dc
@@ -27,7 +22,7 @@ docker run --rm -i -t \
     -e SAMBA_DNS_FORWARDER="192.168.1.1" \
     -v ${PWD}/samba:/var/lib/samba \
     -h addomain \
-    babim/sambaad
+    babim/sambaad:bind
 ```
 Production deploy
 ```
@@ -41,7 +36,7 @@ docker run -h addomain -d \
     -v ${PWD}/krb5kdc:/var/lib/krb5kdc \
     -v ${PWD}/etcsamba:/etc/samba \
     --name addomain --privileged --network=host \
-    babim/sambaad
+    babim/sambaad:bind
 ```
 note:
 * REALM always need UPPERLETTER
@@ -56,7 +51,6 @@ Environment variables are controlling the way how this image behaves therefore p
 * SAMBA_PASSWORD (optional) The password for the DC-Administrator. If not supplied, a random, 20 character long alphanumeric password will be generated and printed to stdout.
 * SAMBA_OPTIONS (optional) Additional options for samba-tool domain provision.
 * SAMBA_HOST_IP (optional) Set the IPv4 address during provisioning. (If you need to set a IPv6 address, supply --host-ip6=IP6ADDRESS through SAMBA_OPTIONS.)
-* SAMBA_DNS_FORWARDER (optional) You can supply the dns-forwarder Samba will use to answer non-local DNS-requests clients submit.
 * KERBEROS_PASSWORD (optional) The kerberos password  if not set will set to `$(pwgen -cny 10 1)`
 
 ### Use existing data
