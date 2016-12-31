@@ -4,8 +4,6 @@ ENV TERM=xterm-color
 RUN apk add --no-cache \
     samba-dc \
     supervisor \
-    bind \
-    bind-tools \
     acl-dev \
     attr-dev \
     blkid \
