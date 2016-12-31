@@ -36,17 +36,25 @@ samba-tool domain provision \
     $SAMBA_OPTIONS \
     --option="bind interfaces only"=yes
 
+	#create LDAP INSECURE
     if [ "${LDAP_ALLOW_INSECURE,,}" == "true" ]; then
 	     sed -i "/\[global\]/a \\\ldap server require strong auth = no" /etc/samba/smb.conf
-	  fi
-
+    fi
+	#update LDAP INSECURE
+#    if [ "${LDAP_ALLOW_INSECURE,,}" == "true" ]; then
+#	     sed -i "s/ldap server require strong auth = .*/ldap server require strong auth = yes/" /etc/samba/smb.conf
+#    fi
+	  
 # Move smb.conf
 mv /etc/samba/smb.conf /var/lib/samba/private/smb.conf
 ln -sf /var/lib/samba/private/smb.conf /etc/samba/smb.conf
 
-# Update dns-forwarder if required
+# add dns-forwarder if required
 [ -n "$SAMBA_DNS_FORWARDER" ] \
-    && sed -i "s/dns forwarder = .*/dns forwarder = $SAMBA_DNS_FORWARDER/" /var/lib/samba/private/smb.conf
+    && sed -i "/\[global\]/a \\\dns forwarder = $SAMBA_DNS_FORWARDER" /var/lib/samba/private/smb.conf
+# Update dns-forwarder if required
+#[ -n "$SAMBA_DNS_FORWARDER" ] \
+#    && sed -i "s/dns forwarder = .*/dns forwarder = $SAMBA_DNS_FORWARDER/" /var/lib/samba/private/smb.conf
 
 # Mark samba as setup
 touch "${SETUP_LOCK_FILE}"
