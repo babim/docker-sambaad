@@ -64,7 +64,7 @@ appStart () {
     # ssh
     if [ -f "/runssh.sh" ]; then /runssh.sh; fi
     # Recreate Kerberos database
-    if [ ! -f "/var/lib/krb5kdc" ]; then
+    if [ ! -f "/var/lib/krb5kdc/principal" ]; then
 	rm -f /etc/krb5.conf
 	ln -sf /var/lib/samba/private/krb5.conf /etc/krb5.conf
 	haveged -w 1024
