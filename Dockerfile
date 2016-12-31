@@ -4,6 +4,8 @@ ENV TERM=xterm-color
 RUN apk add --no-cache \
     samba-dc \
     krb5-server \
+    bind \
+    bind-tools \
     supervisor \
     acl-dev \
     attr-dev \
