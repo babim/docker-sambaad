@@ -34,7 +34,7 @@ samba-tool domain provision \
     --realm=${SAMBA_REALM} \
     --adminpass=${SAMBA_PASSWORD} \
     --server-role=dc \
-    --dns-backend=SAMBA_INTERNAL \
+    --dns-backend=BIND9_DLZ \
     $SAMBA_OPTIONS \
     --option="bind interfaces only"=yes
 
@@ -61,13 +61,6 @@ samba-tool domain provision \
 # Move smb.conf
 mv /etc/samba/smb.conf /var/lib/samba/private/smb.conf
 ln -sf /var/lib/samba/private/smb.conf /etc/samba/smb.conf
-
-# add dns-forwarder if required
-[ -n "$SAMBA_DNS_FORWARDER" ] \
-    && sed -i "/\[global\]/a \\\dns forwarder = $SAMBA_DNS_FORWARDER" /var/lib/samba/private/smb.conf
-# Update dns-forwarder if required
-#[ -n "$SAMBA_DNS_FORWARDER" ] \
-#    && sed -i "s/dns forwarder = .*/dns forwarder = $SAMBA_DNS_FORWARDER/" /var/lib/samba/private/smb.conf
 
 # Mark samba as setup
 touch "${SETUP_LOCK_FILE}"
