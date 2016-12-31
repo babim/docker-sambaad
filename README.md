@@ -5,6 +5,9 @@
 [![](https://images.microbadger.com/badges/image/babim/sambaad:nokrb.svg)](https://microbadger.com/images/babim/sambaad:nokrb "Get your own image badge on microbadger.com") [![](https://images.microbadger.com/badges/version/babim/sambaad:nokrb.svg)](https://microbadger.com/images/babim/sambaad:nokrb "Get your own version badge on microbadger.com")
 [![](https://images.microbadger.com/badges/image/babim/sambaad:nokrb.ssh.svg)](https://microbadger.com/images/babim/sambaad:nokrb.ssh "Get your own image badge on microbadger.com") [![](https://images.microbadger.com/badges/version/babim/sambaad:nokrb.ssh.svg)](https://microbadger.com/images/babim/sambaad:nokrb.ssh "Get your own version badge on microbadger.com")
 
+[![](https://images.microbadger.com/badges/image/babim/sambaad:bind.svg)](https://microbadger.com/images/babim/sambaad:bind "Get your own image badge on microbadger.com") [![](https://images.microbadger.com/badges/version/babim/sambaad:bind.svg)](https://microbadger.com/images/babim/sambaad:bind "Get your own version badge on microbadger.com")
+[![](https://images.microbadger.com/badges/image/babim/sambaad:bind.ssh.svg)](https://microbadger.com/images/babim/sambaad:bind.ssh "Get your own image badge on microbadger.com") [![](https://images.microbadger.com/badges/version/babim/sambaad:bind.ssh.svg)](https://microbadger.com/images/babim/sambaad:bind.ssh "Get your own version badge on microbadger.com")
+
 ### Credits
 Some parts are collected from:
 * https://github.com/pitkley/dockerfiles/tree/master/samba-ad-dc
@@ -46,6 +49,7 @@ docker run -h addomain -d \
 note:
 * REALM always need UPPERLETTER
 * DOMAIN need lowerletter
+* If you update this container. Need recreate kerberos database. You should remove /var/lib/krb5kdc/* and when start container kerberos will recreat auto.
 
 ### Environment variables
 
