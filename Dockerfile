@@ -5,8 +5,6 @@ RUN apk add --no-cache \
     samba-dc \
     krb5-server \
     supervisor \
-    bind \
-    bind-tools \
     acl-dev \
     attr-dev \
     blkid \
