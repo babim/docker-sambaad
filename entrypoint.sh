@@ -5,6 +5,7 @@ LDAP_ALLOW_INSECURE=${LDAP_ALLOW_INSECURE:-false}
 SAMBA_REALM=${SAMBA_REALM:-SAMBA.LAN}
 # Populate $SAMBA_OPTIONS
 SAMBA_OPTIONS=${SAMBA_OPTIONS:-}
+HOSTNAME=${HOSTNAME:-"hostname -f"}
 
 [ -n "$SAMBA_DOMAIN" ] \
     && SAMBA_OPTIONS="$SAMBA_OPTIONS --domain=$SAMBA_DOMAIN" \
@@ -69,7 +70,6 @@ touch "${SETUP_LOCK_FILE}"
 
 appStart () {
 # Fix nameserver
-hostname $HOSTNAME
 echo -e "search ${SAMBA_REALM}\nnameserver 127.0.0.1" > /etc/resolv.conf
 echo -e "127.0.0.1 $HOSTNAME" > /etc/hosts
 echo -e "$HOSTNAME" > /etc/hostname
