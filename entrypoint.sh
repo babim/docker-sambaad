@@ -22,9 +22,6 @@ KERBEROS_PASSWORD=${KERBEROS_PASSWORD:-`(< /dev/urandom tr -dc _A-Z-a-z-0-9 | he
 echo "Samba password set to: $SAMBA_PASSWORD"
 echo "Kerberos password set to: $KERBEROS_PASSWORD"
 
-# Fix nameserver
-echo -e "search ${SAMBA_REALM}\nnameserver 127.0.0.1" > /etc/resolv.conf
-
 # Provision domain
 rm -f /etc/samba/smb.conf
 rm -rf /var/lib/samba/*
@@ -71,6 +68,10 @@ touch "${SETUP_LOCK_FILE}"
 }
 
 appStart () {
+# Fix nameserver
+echo -e "search ${SAMBA_REALM}\nnameserver 127.0.0.1" > /etc/resolv.conf
+echo -e "127.0.0.1 $HOSTNAME" > /etc/hosts
+echo -e "$HOSTNAME" > /etc/hostname
     # setup
     if [ ! -f "${SETUP_LOCK_FILE}" ]; then
       appSetup
