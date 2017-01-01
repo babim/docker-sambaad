@@ -69,6 +69,7 @@ touch "${SETUP_LOCK_FILE}"
 
 appStart () {
 # Fix nameserver
+hostname $HOSTNAME
 echo -e "search ${SAMBA_REALM}\nnameserver 127.0.0.1" > /etc/resolv.conf
 echo -e "127.0.0.1 $HOSTNAME" > /etc/hosts
 echo -e "$HOSTNAME" > /etc/hostname
