@@ -40,6 +40,7 @@ docker run -h addomain -d \
     -e SAMBA_PASSWORD="Password1!" \
     -e SAMBA_HOST_IP="192.168.1.10" \
     -e SAMBA_DNS_FORWARDER="192.168.1.1" \
+    -e HOSTNAME="addomain" \
     -v ${PWD}/libsamba:/var/lib/samba \
     -v ${PWD}/krb5kdc:/var/lib/krb5kdc \
     -v ${PWD}/etcsamba:/etc/samba \
@@ -55,6 +56,7 @@ note:
 
 Environment variables are controlling the way how this image behaves therefore please check this list an explanation:
 
+* HOSTNAME host name of this server
 * SAMBA_REALM (required) The realm (comparable to the FQDN) for the domain controller (default. samba.lan).
 * SAMBA_DOMAIN (optional) The domain (comparable to the NetBios-name) for the domain controller (default: samba). If it is not supplied, the first part of the FQDN/SAMBA_REALM will be used.
 * SAMBA_PASSWORD (optional) The password for the DC-Administrator. If not supplied, a random, 20 character long alphanumeric password will be generated and printed to stdout.
