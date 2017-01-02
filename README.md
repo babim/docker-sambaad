@@ -45,7 +45,6 @@ docker run -h addomain -d \
     -e HOSTNAME="addomain" \
     -v ${PWD}/libsamba:/var/lib/samba \
     -v ${PWD}/krb5kdc:/var/lib/krb5kdc \
-    -v ${PWD}/etcsamba:/etc/samba \
     --name addomain --privileged --network=host \
     babim/sambaad
 ```
