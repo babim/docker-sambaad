@@ -14,6 +14,8 @@ Some parts are collected from:
 * https://github.com/tkaefer/alpine-samba-ad-container
 * https://wiki.samba.org/index.php/Samba,_Active_Directory_%26_LDAP
 
+### Note:
+This container good for auth over SAMBA AD. If you need a SAMBA AD for windows pc you need a VM, with this docker container you can join AD, but after restart you can't login over AD.
 
 ### Usage
 
