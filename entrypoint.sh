@@ -137,4 +137,7 @@ case "$1" in
 		;;
 esac
 
+# option with entrypoint
+if [ -f "/option.sh" ]; then /option.sh; fi
+
 exit 0
