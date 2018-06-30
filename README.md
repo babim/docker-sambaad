@@ -1,12 +1,10 @@
 ## Samba 4 AD container based on Alpine Linux
 
-[![](https://images.microbadger.com/badges/image/babim/sambaad.svg)](https://microbadger.com/images/babim/sambaad "Get your own image badge on microbadger.com") [![](https://images.microbadger.com/badges/version/babim/sambaad.svg)](https://microbadger.com/images/babim/sambaad "Get your own version badge on microbadger.com") [![](https://images.microbadger.com/badges/image/babim/sambaad:ssh.svg)](https://microbadger.com/images/babim/sambaad:ssh "Get your own image badge on microbadger.com") [![](https://images.microbadger.com/badges/version/babim/sambaad:ssh.svg)](https://microbadger.com/images/babim/sambaad:ssh "Get your own version badge on microbadger.com")
+[![](https://images.microbadger.com/badges/image/babim/sambaad.svg)](https://microbadger.com/images/babim/sambaad "Get your own image badge on microbadger.com") [![](https://images.microbadger.com/badges/version/babim/sambaad.svg)](https://microbadger.com/images/babim/sambaad "Get your own version badge on microbadger.com")
 
 [![](https://images.microbadger.com/badges/image/babim/sambaad:nokrb.svg)](https://microbadger.com/images/babim/sambaad:nokrb "Get your own image badge on microbadger.com") [![](https://images.microbadger.com/badges/version/babim/sambaad:nokrb.svg)](https://microbadger.com/images/babim/sambaad:nokrb "Get your own version badge on microbadger.com")
-[![](https://images.microbadger.com/badges/image/babim/sambaad:nokrb.ssh.svg)](https://microbadger.com/images/babim/sambaad:nokrb.ssh "Get your own image badge on microbadger.com") [![](https://images.microbadger.com/badges/version/babim/sambaad:nokrb.ssh.svg)](https://microbadger.com/images/babim/sambaad:nokrb.ssh "Get your own version badge on microbadger.com")
 
 [![](https://images.microbadger.com/badges/image/babim/sambaad:bind.svg)](https://microbadger.com/images/babim/sambaad:bind "Get your own image badge on microbadger.com") [![](https://images.microbadger.com/badges/version/babim/sambaad:bind.svg)](https://microbadger.com/images/babim/sambaad:bind "Get your own version badge on microbadger.com")
-[![](https://images.microbadger.com/badges/image/babim/sambaad:bind.ssh.svg)](https://microbadger.com/images/babim/sambaad:bind.ssh "Get your own image badge on microbadger.com") [![](https://images.microbadger.com/badges/version/babim/sambaad:bind.ssh.svg)](https://microbadger.com/images/babim/sambaad:bind.ssh "Get your own version badge on microbadger.com")
 
 ### Credits
 Some parts are collected from:
@@ -65,6 +63,31 @@ Environment variables are controlling the way how this image behaves therefore p
 * SAMBA_HOST_IP (optional) Set the IPv4 address during provisioning. (If you need to set a IPv6 address, supply --host-ip6=IP6ADDRESS through SAMBA_OPTIONS.)
 * SAMBA_DNS_FORWARDER (optional) You can supply the dns-forwarder Samba will use to answer non-local DNS-requests clients submit.
 * KERBEROS_PASSWORD (optional) The kerberos password  if not set will set to `$(pwgen -cny 10 1)`
+
+## Environment ssh, cron option
+
+#### SSH = SSH service for docker container
+#### SSHPASS = password for SSH service
+#### CRON = Crontab service for container
+#### NFS = NFS client mount for container (need full permission)
+#### SYNOLOGY = SYNOLOGY user ID
+#### UPGRADE = upgrade OS for container
+#### DNS = DNS google, cloudflare for this container
+#### FULLOPTION = all option above
+
+```
+SSH=false
+SSHPASS=root (or you set)
+
+CRON=false
+NFS=false
+SYNOLOGY=false
+UPGRADE=false
+WWWUSER=www-data
+MYSQLUSER=mysql
+FULLOPTION=true
+DNS=false
+```
 
 ### Use existing data
 
